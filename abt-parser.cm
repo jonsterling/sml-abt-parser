@@ -1,0 +1,11 @@
+Library
+  signature PARSE_OPERATOR
+  signature PARSE_ABT
+  functor ParseAbt
+is
+  $libs/cmlib/cmlib.cm
+  $libs/sml-abt/abt.cm
+  $libs/sml-parcom-wrapper/parcom.cm
+  src/parse_operator.sig
+  src/parse_abt.sig
+  src/parse_abt.fun

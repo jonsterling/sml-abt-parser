@@ -1,0 +1,6 @@
+Library
+  signature PARSE_OPERATOR
+  signature PARSE_ABT
+  functor ParseAbt
+is
+  abt-parser.cm (bind:(anchor:libs value:lib))

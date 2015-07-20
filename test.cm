@@ -1,0 +1,6 @@
+Group is
+  development.cm
+  lib/cmlib/cmlib.cm
+  lib/sml-parcom-wrapper/parcom.cm
+  lib/sml-abt/abt.cm
+  test/parse_abt_test.fun

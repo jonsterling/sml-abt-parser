@@ -1,0 +1,9 @@
+[submodule "lib/sml-abt"]
+	path = lib/sml-abt
+	url = git@github.com:jonsterling/sml-abt.git
+[submodule "lib/sml-parcom-wrapper"]
+	path = lib/sml-parcom-wrapper
+	url = git@github.com:jonsterling/sml-parcom-wrapper.git
+[submodule "lib/cmlib"]
+	path = lib/cmlib
+	url = git@github.com:standardml/cmlib.git
