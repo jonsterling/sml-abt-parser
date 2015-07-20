@@ -2,10 +2,16 @@ Library
   signature PARSE_OPERATOR
   signature PARSE_ABT
   functor ParseAbt
+  signature UNPARSE_ABT
+  functor UnparseAbt
 is
   $libs/cmlib/cmlib.cm
   $libs/sml-abt/abt.cm
+  $libs/sml-abt/vector-lib/vector-lib.cm
   $libs/sml-parcom-wrapper/parcom.cm
+  $libs/sml-unparse/unparse.cm
   src/parse_operator.sig
   src/parse_abt.sig
   src/parse_abt.fun
+  src/unparse_abt.sig
+  src/unparse_abt.fun
