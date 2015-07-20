@@ -4,6 +4,7 @@
 [submodule "lib/sml-parcom-wrapper"]
 	path = lib/sml-parcom-wrapper
 	url = git@github.com:jonsterling/sml-parcom-wrapper.git
+  ignore = untracked
 [submodule "lib/cmlib"]
 	path = lib/cmlib
 	url = git@github.com:standardml/cmlib.git
