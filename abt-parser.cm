@@ -6,6 +6,7 @@ is
   $libs/cmlib/cmlib.cm
   $libs/sml-abt/abt.cm
   $libs/sml-parcom-wrapper/parcom.cm
+  $libs/sml-unparse/unparse.cm
   src/parse_operator.sig
   src/parse_abt.sig
   src/parse_abt.fun

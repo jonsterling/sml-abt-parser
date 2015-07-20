@@ -8,3 +8,6 @@
 [submodule "lib/cmlib"]
 	path = lib/cmlib
 	url = git@github.com:standardml/cmlib.git
+[submodule "lib/sml-unparse"]
+	path = lib/sml-unparse
+	url = git@github.com:jonsterling/sml-unparse.git
