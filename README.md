@@ -3,8 +3,7 @@
 To develop this library, first get its submodules:
 
 ````sh
-git submodule init --recursive
-git submodule update --recursive
+git submodule update --init --recursive
 ````
 
 Then, load `development.cm` in the SML/NJ repl:
