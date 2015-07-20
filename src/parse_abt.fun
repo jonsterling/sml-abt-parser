@@ -71,31 +71,50 @@ struct
        free = ref (dictFromFvs fvs)}
   end
 
+  type state = SymbolTable.t
+  type parser_kit =
+    {parseFreeVariable : state -> Variable.t CharParser.charParser,
+     parseBoundVariable : state -> (Variable.t * state) CharParser.charParser
+    }
+
   fun parens p = (symbol "(" >> spaces) >> p << (spaces >> symbol ")")
 
-  local
-    val newVariable = identifier wth (fn x => (x, Variable.named x))
-    fun var sigma = identifier wth (fn x => `` (SymbolTable.named sigma x))
+  type input = Variable.t list * ParseOperator.world
 
-    fun abt sigma w () =
-      (force (abs sigma w)
-      || force (app sigma w)
-      || var sigma) ?? "abt"
-    and app sigma w () =
-      ParseOperator.parseOperator w
-        && opt (parens (force (args sigma w)))
-        wth (fn (O, ES) => O $$ getOpt (ES, #[])) ?? "app"
-    and abs sigma w () =
-      (newVariable << spaces << symbol "." << spaces -- (fn (n,v) =>
+  structure ParserKit =
+  struct
+    fun parseFreeVariable sigma = identifier wth (SymbolTable.named sigma)
+    fun parseBoundVariable sigma =
+      identifier wth (fn n =>
         let
-          val sigma' = SymbolTable.bind sigma (n,v)
+          val v = Variable.named n
         in
-          force (abt sigma' w) wth (fn E => v \\ E)
-        end)) ?? "abs"
-    and args sigma w () = separate (force (abt sigma w)) (symbol ";") wth Vector.fromList ?? "args"
-
-  in
-    fun parseAbt fvs w =
-      force (abt (SymbolTable.empty fvs) w)
+          (v, SymbolTable.bind sigma (n, v))
+        end)
   end
+
+  fun initialState fvs = SymbolTable.empty fvs
+
+  fun extensibleParseAbt w ext =
+    let
+      open ParserKit
+      fun abt sigma () =
+        (force (abs sigma)
+        || force (app sigma)
+        || parseFreeVariable sigma wth ``
+        ) ?? "abt"
+      and app sigma () =
+        ParseOperator.parseOperator w
+          && opt (parens (force (args sigma)))
+          wth (fn (O, ES) => O $$ getOpt (ES, #[])) ?? "app"
+      and abs sigma () =
+        (parseBoundVariable sigma << spaces << symbol "." << spaces -- (fn (v, tau) =>
+          ext tau wth (fn E => v \\ E))) ?? "abs"
+      and args sigma () =
+        separate (ext sigma) (symbol ";") wth Vector.fromList ?? "args"
+    in
+      force o abt
+    end
+
+  fun parseAbt w st = extensibleParseAbt w (parseAbt w) st
 end
