@@ -83,7 +83,13 @@ struct
 
   structure ParserKit =
   struct
-    fun parseFreeVariable sigma = identifier wth (SymbolTable.named sigma)
+    fun parseFreeVariable sigma =
+      identifier wth (fn n =>
+        if n = "_" then
+          Variable.named n
+        else
+          SymbolTable.named sigma n)
+
     fun parseBoundVariable sigma =
       identifier wth (fn n =>
         let
