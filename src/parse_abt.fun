@@ -23,7 +23,7 @@ struct
     val commentStart = NONE
     val commentEnd = NONE
     val commentLine = NONE
-    val nestedComments = false
+    val nestedComments = true
 
     val identLetter =
       CharParser.letter
